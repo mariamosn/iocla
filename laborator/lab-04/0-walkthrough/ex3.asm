@@ -22,7 +22,7 @@ zone2:
     add eax, ebx
     PRINTF32 `%d\n\x0`, eax
 jump2:
-    jmp $-0x4A                 ; salt relativ cu deplasamanent
+    jmp $-0x4A                 ; salt relativ cu deplasamanent (catre zone1)
 
 exit:
     ret

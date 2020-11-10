@@ -69,7 +69,7 @@ void unsigned_to_string(unsigned int u, char *out) {
 void int_to_hex_string(int x, char *out) {
 	int v[HEXA_MAX_LENGTH], size = 0, i;
 	unsigned aux;
-	if (x >= 0) {
+	/*if (x >= 0) {
 		aux = x;
 	} else {
 		aux = -x;
@@ -79,7 +79,8 @@ void int_to_hex_string(int x, char *out) {
 		} else {
 			aux++;
 		}
-	}
+	}*/
+	aux = x;
 	while (aux) {
 		v[size++] = aux % 16;
 		aux /= 16;
