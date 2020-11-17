@@ -11,6 +11,16 @@ main:
     mov ebx, 1      ; stores the current power
 
     ; TODO - print the powers of 2 that generate number stored in EAX
+lbl:
+	test ebx, eax
+	je not
+	PRINTF32 `%u\n\x0`, ebx
+	sub eax, ebx
 
+not:
+	shl ebx, 1
+	cmp eax, 0
+	jne lbl
+	
     leave
     ret

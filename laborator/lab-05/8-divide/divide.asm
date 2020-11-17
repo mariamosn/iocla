@@ -62,7 +62,6 @@ main:
     PRINTF32 `%u\n\x0`, ebx
 
 
-    ; WORK IN PROGRESS!!!
     ; TODO: Calculate quotient and remainder for 69094148 / 87621.
 
     mov edx, dword [dividend3 + 32]
