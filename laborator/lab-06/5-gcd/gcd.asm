@@ -36,9 +36,12 @@ L3:
 print:
 
     ; TODO 1: solve the 'Segmentation fault!' error
+    pop ebx
+    pop ecx
 
     ; TODO 2: print the result in the form of: "gdc(eax, edx)=7" with PRINTF32 macro
     ; output value in eax
+    PRINTF32 `gcd(%d, %d)=%d\n\x0`, ecx, ebx, eax 
 
     xor eax, eax
     ret
