@@ -1,0 +1,47 @@
+Maria Moșneag 323CA
+
+One Time Pad
+
+	Parcurg array-urile (invers) și pentru fiecare poziție introduc în bl
+byte-ul corespunzător poziției curente din plaintext și în bh byte-ul
+corespunzător poziției curente din key. Apoi aplic criptarea (folosind
+instrucțiunea xor) și introduc byte-ul obținut pe poziția curentă din array-ul
+de output (cipher).
+
+Caesar Cipher
+
+	Modific key astfel încât să fie cel mult egală cu numărul de litere din
+alfabet, astfel încât să nu fie necesar să efectuez mai multe rotiri.
+	Parcurg array-urile (invers) și pentru fiecare byte din plaintext fac
+criptarea și îl introduc apoi în ciphertext. Pentru fiecare byte verific dacă
+este literă mare sau mică și aplic criptarea. În cazul în care caracterul nu
+este literă, sar peste instrucțiunile de criptare.
+	Atât în cazul literelor uppercase, cât și în cel al literelor lowercase,
+criptarea se face asemănător: adaug key și apoi verific dacă byte-ul este în
+continuare corespunzător unei litere, iar, dacă nu, fac modificările necesare
+astfel încât să simulez dispunerea circulară a alfabetului.
+
+Vigenere Cipher
+	
+	Parcurg array-urile și pentru fiecare byte din plaintext verific dacă este
+literă. Dacă este, execut instrucțiunile aferente tipului său (uppercase sau
+lowercase), iar dacă nu, sar peste instrucțiunile de criptare.
+	Pentru a reține poziția la care am ajuns în key, folosesc o variabilă
+globală, cnt. În momentul în care ajung la capătul cheii, resetez cnt și
+reparcurg key.
+
+StrStr
+
+	Parcurg șirul până găsesc un caracter identic cu primul din subșirul căutat.
+Apoi verific dacă următoarea secvență de caractere reprezintă subșirul căutat.
+Dacă l-am găsit, actualizez valoarea găsită la adresa din registrul edi și
+programul se termină. Dacă nu, căutarea continuă până la finalul șirului.
+
+Binary to Hexadecimal
+
+	Determin lungimea șirului ce va conține reprezentarea în hexadecimal a
+numărului pe care îl voi converti, prin rotunjirea (prin adaos a) rezultatului
+împărțirii la 4 a lungimii reprezentării sale in binar.
+	Împart apoi reprezentarea în binar în grupuri de câte 4 caractere pe care
+le convertesc în hexadecimal, iar rezultatul îl pun pe poziția curentă din
+bin_sequence.
