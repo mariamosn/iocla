@@ -1,3 +1,4 @@
+; Maria Moșneag 323CA
 %include "io.mac"
 
 section .data
@@ -20,83 +21,87 @@ bin_to_hex:
     ;; DO NOT MODIFY
 
     ;; TODO: Implement bin to hex
+
     ; determinarea numarului de caractere din output
-    mov eax, ecx
-    mov bl, 4
-    div bl
-    xor ebx, ebx
-    mov bl, al
-    cmp ah, 0
-    je no_reminder
-    inc ebx
+    mov     eax, ecx
+    mov     bl, 4
+    div     bl
+    xor     ebx, ebx
+    mov     bl, al
+    cmp     ah, 0
+    je      no_reminder
+    inc     ebx
 
 no_reminder:
-    mov [hex_cnt], ebx
-    mov [hex_len], ebx
+    mov     [hex_cnt], ebx
+    mov     [hex_len], ebx
 
 convert:
-    xor ebx, ebx
-    xor eax, eax
-    jmp compute
+    xor     ebx, ebx
+    xor     eax, eax
+    jmp     compute
 
 next:
-    loop convert
-    jmp fin
+    loop    convert
+    jmp     fin
 
+    ; determin numarul reprezentat de un grup de 4 biti
 compute:
     ; bitul 0
-    mov al, byte [esi + ecx - 1]
-    sub al, '0'
-    add ebx, eax
-    cmp ecx, 1
-    je end
+    mov     al, byte [esi + ecx - 1]
+    sub     al, '0'
+    add     ebx, eax
+    cmp     ecx, 1
+    je      end
 
     ; bitul 1
-    dec ecx
-    mov al, byte [esi + ecx - 1]
-    sub al, '0'
-    shl eax, 1
-    add ebx, eax
-    cmp ecx, 1
-    je end
+    dec     ecx
+    mov     al, byte [esi + ecx - 1]
+    sub     al, '0'
+    shl     eax, 1
+    add     ebx, eax
+    cmp     ecx, 1
+    je      end
 
     ; bitul 2
-    dec ecx
-    mov al, byte [esi + ecx - 1]
-    sub al, '0'
-    shl eax, 2
-    add ebx, eax
-    cmp ecx, 1
-    je end
+    dec     ecx
+    mov     al, byte [esi + ecx - 1]
+    sub     al, '0'
+    shl     eax, 2
+    add     ebx, eax
+    cmp     ecx, 1
+    je      end
 
     ; bitul 3
-    dec ecx
-    mov al, byte [esi + ecx - 1]
-    sub al, '0'
-    shl eax, 3
-    add ebx, eax
+    dec     ecx
+    mov     al, byte [esi + ecx - 1]
+    sub     al, '0'
+    shl     eax, 3
+    add     ebx, eax
 
+    ; transform numarul obtinut in caracterul echivalent reprezentarii sale in hex
 end:
-    cmp ebx, 10
-    jb digit
-    sub ebx, 10
-    add ebx, 'A'
-    jmp format_done
+    cmp     ebx, 10
+    jb      digit
+    sub     ebx, 10
+    add     ebx, 'A'
+    jmp     format_done
 
 digit:
-    add ebx, '0'
+    add     ebx, '0'
 
+    ; adaug caracterul curent in bin_sequence
 format_done:
-    mov eax, [hex_cnt]
-    mov byte [edx + eax - 1], bl
-    dec eax
-    mov [hex_cnt], eax
-    jmp next
+    mov     eax, [hex_cnt]
+    mov     byte [edx + eax - 1], bl
+    dec     eax
+    mov     [hex_cnt], eax
+    jmp     next
 
 fin:
-    mov eax, [hex_len]
-    mov byte [edx + eax], 10
-    ;mov byte [edx + eax + 1], '\0'
+    mov     eax, [hex_len]
+    ; adaug terminatorul de sir
+    mov    byte [edx + eax], 10
 
     ;; DO NOT MODIFY
     popa
