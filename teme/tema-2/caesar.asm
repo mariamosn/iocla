@@ -1,3 +1,4 @@
+; Maria Moșneag 323CA
 %include "io.mac"
 
 section .text
@@ -17,14 +18,15 @@ caesar:
     ;; DO NOT MODIFY
 
     ;; TODO: Implement the caesar cipher
+
     ; in cazul in care key > numarul de litere din alfabet, modific key astfel incat sa nu fie necesar sa se efectueze mai multe rotiri circulare
     xor     eax, eax
     mov     eax, edi
     ; ebx <- numarul de litere din alfabet
     xor     ebx, ebx
-    mov     ebx, 'z'
-    sub     ebx, 'a'
-    inc     ebx
+    mov     bl, 'z'
+    sub     bl, 'a'
+    inc     bl
     ; key va fi restul impartirii valorii initiale la numarul de litere din alfabet
     div     bl
     shr     eax, 8
@@ -34,10 +36,12 @@ caesar:
 
 caesar_crypt:
     mov     bl, [esi + ecx - 1]     ; bl <- plaintext[i]
+    ; verific daca byte-ul curent corespunde unei litere mari
     cmp     bl, 'A'
     jb      done
     cmp     bl, 'Z'
     jbe     uppercase_letter
+    ; verific daca byte-ul curent corespunde unei litere mici
     cmp     bl, 'a'
     jb      done
     cmp     bl, 'z'

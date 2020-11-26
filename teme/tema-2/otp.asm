@@ -1,3 +1,4 @@
+; Maria Moșneag 323CA
 %include "io.mac"
 
 section .text
@@ -19,11 +20,11 @@ otp:
     ;; TODO: Implement the One Time Pad cipher
 
 otp_crypt:
-	mov    bl, byte [esi + ecx - 1]    ; bl <- plaintext[i]
-	mov    bh, byte [edi + ecx - 1]    ; bh <- key[i]
-	xor    bl, bh                      ; bl <- plain[i] ^ key[i]
-	mov    byte [edx + ecx - 1], bl    ; cipher[i] <- bl
-	loop   otp_crypt                   ; parcurgerea array-urilor se va face invers
+    mov    bl, byte [esi + ecx - 1]    ; bl <- plaintext[i]
+    mov    bh, byte [edi + ecx - 1]    ; bh <- key[i]
+    xor    bl, bh                      ; bl <- plain[i] ^ key[i]
+    mov    byte [edx + ecx - 1], bl    ; cipher[i] <- bl
+    loop   otp_crypt                   ; parcurgerea array-urilor se face invers
 
     ;; DO NOT MODIFY
     popa
