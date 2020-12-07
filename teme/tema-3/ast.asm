@@ -27,12 +27,12 @@ iocla_atoi:
     mov 	ebp, esp
     push 	ebx
     mov 	[sign], dword 0
-    ; in edx se va forma numarul
+    ; the number will be formed in edx
     xor 	edx, edx
 
     mov 	ebx, [ebp + 8]
 
-    ; determinarea lungimii sirului de caractere
+    ; determining the string's length
     pusha
     push 	ebx
     call 	strlen
@@ -43,16 +43,17 @@ iocla_atoi:
     mov 	ecx, [len]
 
 get_num:
-    ; determinarea pozitiei curente din string
+    ; determining the current position in the string
     push 	ecx
     mov 	eax, [len]
     sub 	eax, ecx
     mov 	ecx, eax
 
-    ; obtinerea caracterului corespunzator pozitiei curente
+    ; getting the character from the current position
     xor 	eax, eax
     mov 	al, byte [ebx + ecx]
 
+    ; checking the sign of the number (positive or negative)
     cmp 	ecx, 0
     jne 	continue
     cmp 	al, '-'
@@ -61,10 +62,10 @@ get_num:
     jmp 	next
 
 continue:
-    ; transformarea caracterului in cifra corespunzatoare
+    ; converting the character into the corresponding digit
     sub 	al, '0'
 
-    ; adaugarea cifrei pe pozitia unitatilor a numarului
+    ; adding the digit on the units position of the number
     push 	eax
 
     xor 	eax, eax
@@ -81,12 +82,12 @@ next:
     pop 	ecx
     loop 	get_num
 
-    ; verificarea tipului de numar primit (negativ sau pozitiv)
+    ; checking if the number should be negative
     mov 	ecx, [sign]
     cmp 	ecx, 0
     je 		done
 
-    ; numar negativ
+    ; changes for negative numbers
     xor 	eax, eax
     mov 	eax, edx
     xor 	edx, edx
@@ -106,7 +107,7 @@ create_tree:
     enter 	0, 0
     push 	ebx
 
-    ; obtinerea informatiei din root
+    ; getting the info that needs to be stored in root
     mov 	edx, [ebp + 8]
     push 	delim
     push 	edx
@@ -116,7 +117,7 @@ create_tree:
     cmp 	ebx, 0
     je 		end
 
-    ; alocarea memoriei pentru root
+    ; allocation of memory for the root node
     push 	12
     call 	malloc
     add 	esp, 4
@@ -125,23 +126,23 @@ create_tree:
     mov 	ecx, eax
     push 	ecx
 
-    ; copierea informatiei in data
+    ; introducing the info into data
     push 	ebx
     call 	strdup
     add 	esp, 4
     pop 	ecx
     mov 	[ecx], eax
 
-    ; initializarea left si right cu NULL
+    ; setting left and right child to NULL
     mov 	[ecx + 4], dword 0
     mov 	[ecx + 8], dword 0
 
-    ; memorarea adresei nodului root
+    ; storing the address of the root node
     mov 	[root], ecx
     push 	ecx
 
 constr:
-    ; obtinerea informatiei din noul nod
+    ; getting the info that needs to be stored in the new node
     push 	delim
     push 	0
     call 	strtok
@@ -150,7 +151,7 @@ constr:
     cmp 	ebx, 0
     je 		end
 
-    ; alocarea memoriei pentru noul nod
+    ; allocation of memory for the new node
     push 	12
     call 	malloc
     add 	esp, 4
@@ -159,33 +160,33 @@ constr:
     mov 	ecx, eax
     push 	ecx
 
-    ; copierea informatiei in data
+    ; introducing the info into data
     push 	ebx
     call 	strdup
     add 	esp, 4
     pop 	ecx
     mov 	[ecx], eax
 
-    ; initializarea left si right cu NULL
+    ; setting left and right child to NULL
     mov 	[ecx + 4], dword 0
     mov 	[ecx + 8], dword 0
 
-    ; parintele
+    ; getting the parent
     pop 	edx
-    ; verificarea fiilor nuli ai parintelui
+    ; checking which child position is empty
     cmp 	[edx + 4], dword 0
     je 		left_free
 
-    ; nodul curent este fiu drept
+    ; the current node is the right son
     mov 	[edx + 8], ecx
     jmp 	check
 
-    ; nodul curent este fiu stang
+    ; the current node is the left son
 left_free:
     mov 	[edx + 4], ecx
     push 	edx
 
-     ; verificarea tipului de nod curent (operatie sau numar)
+    ; checking the type of data stored in the current node (operator or number)
 check:
     mov 	dl, byte [ebx]
     cmp 	dl, '+'

@@ -1,5 +1,40 @@
 Maria Mosneag 323CA
 
-Oricum nu il scriu in masina virtuala ca nu stau sa imi instalez aici
-diacritice, ce credeati. E doar asa, de incercare sa ma asigur ca doar
-asta lipseste.
+iocla_atoi:
+
+	Determin numărul de caractere din string-ul primit folosind strlen și
+memorez valoarea obținută într-o variabilă globală (len). Apoi, folosindu-mă de
+len, parcurg caracter cu caracter șirul într-un loop (în ordine normală).
+	În cazul primului caracter, verific dacă acesta este '-' (adică dacă numărul
+este negativ) și rețin această informație într-o variabilă globală (sign).
+	Transform fiecare caracter corespunzător unei cifre în număr și îl adaug
+pe poziția unităților numărului format (în registrul edx), construind astfel
+modulul numărului primit sub formă de string.
+	La final, verific dacă numărul primit era negativ, caz în care înmulțesc
+numărul format cu -1, iar rezultatul final este mutat din edx în eax.
+
+create_tree:
+
+	Aloc câte 12 bytes (4 bytes / pointer * 3 pointeri) unui nod folosind
+malloc. De asemenea, folosesc strtok pentru a obține informația din data și o
+copiez în zona de memorie corespunzătoare folosind strdup. Pointerii către cei
+doi fii, left și right, sunt inițializați cu 0 (NULL).
+	Pentru a forma relațiile părinte-fiu, voi folosi stiva în care voi introduce
+toate nodurile părinte (adică cele care nu conțin numere). Astfel, în momentul
+creării unui nou nod, voi avea în vârful stivei adresa nodului părinte.
+	Creez prima dată nodul corespunzător lui root urmând pașii menționați mai
+mai sus, salvez adresa acestuia într-o variabilă globală (root) și îl introduc
+în stivă.
+	Parcurg apoi string-ul primit ca parametru (folosind strtok) și pentru
+fiecare token, creez în mod asemănător un nod. Preiau părintele nodului curent
+de pe stivă și verific dacă poziția left a acestuia este liberă. Dacă da,
+adaug un pointer către nodul curent în zona corespunzătoare fiului stâng și
+reintroduc părintele în stivă (pentru că încă are poziția fiului drept liberă).
+Dacă poziția left este însă ocupată, înseamnă că nodul curent este fiu drept,
+creez legătura corespunzătoare între nod și părinte, dar nu mai reintroduc nodul
+părinte pe stivă (pentru că acesta „și-a găsit” deja cei doi fii).
+	Apoi verific dacă nodul curent conține un număr sau un operator. Dacă nodul
+conține un număr, înseamnă că acesta va fi frunză în arbore, deci pot trece la
+următorul nod care trebuie să fie creat. Dacă nodul conține însă un operator,
+înseamnă că acesta va fi la rândul lui părinte, așa că îl introduc în stivă.
+	La final, mut în eax adresa nodului rădăcină stocată în root.
